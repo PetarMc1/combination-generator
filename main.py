@@ -2,11 +2,10 @@ import itertools
 import os
 
 def generate_combinations(input_string, combination_length):
-    input_string = ''.join(sorted(set(input_string), key=input_string.index))
-
-    combinations = itertools.permutations(input_string, combination_length)
-
-    return combinations
+    combinations = itertools.product(input_string, repeat=combination_length)
+    unique_combinations = set(combinations)
+    
+    return unique_combinations
 
 def save_combinations_to_file(combinations, input_string):
     directory = 'combinations'
