@@ -30,3 +30,9 @@ python main.py
 
 3. Follow Prompt and View Results
 You will find the generated combination files in the `ccombinations` folder.
+
+## Contributing
+Check the [Contributing Guidelines](/CONTRIBUTING.md)
+
+## Licence
+The Combination Generator is licensed under the [MIT](/LICENCE) Licence
