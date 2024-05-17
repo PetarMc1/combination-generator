@@ -1,4 +1,7 @@
 /.vscode
 /.idea
-/tests
-combinations/*.txt
+/dist
+/build/
+*.spec
+*.log
+*.tmp
