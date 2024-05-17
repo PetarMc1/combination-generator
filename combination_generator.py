@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import messagebox
 from tkinter.scrolledtext import ScrolledText
 import pyperclip
+import os
+import sys
 
 def generate_combinations(input_string, combination_length):
     combinations = itertools.product(input_string, repeat=combination_length)
@@ -17,37 +19,45 @@ def display_combinations(combinations, output_area):
     output_area.config(state=tk.DISABLED)
     return combinations_str
 
+def resource_path(relative_path):
+    try:
+        # PyInstaller creates a temporary folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except AttributeError:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 def main():
     root = tk.Tk()
+    
+    icon_path = resource_path('Assets/logo.ico')
+    root.iconbitmap(icon_path)
+    
     root.title("Combination Generator")
 
-    # Grid configuration
     root.grid_columnconfigure(0, weight=1)
     root.grid_columnconfigure(1, weight=1)
     root.grid_rowconfigure(3, weight=1)
 
-    # Input String
     input_label = tk.Label(root, text="String:")
     input_label.grid(row=0, column=0, padx=10, pady=5, sticky=tk.E)
 
     input_entry = tk.Entry(root, width=50)
     input_entry.grid(row=0, column=1, padx=10, pady=5, sticky=tk.W)
 
-    # Combination Length
     length_label = tk.Label(root, text="Count:")
     length_label.grid(row=1, column=0, padx=10, pady=5, sticky=tk.E)
 
     length_spinbox = tk.Spinbox(root, from_=1, to=10, width=5)
     length_spinbox.grid(row=1, column=1, padx=10, pady=5, sticky=tk.W)
 
-    # Output Area
     output_label = tk.Label(root, text="Output:")
     output_label.grid(row=2, column=0, padx=10, pady=5, sticky=tk.NE)
 
     output_area = ScrolledText(root, wrap=tk.WORD, width=50, height=20, state=tk.DISABLED)
     output_area.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
 
-    # Buttons
     def on_generate():
         input_string = input_entry.get()
         try:
