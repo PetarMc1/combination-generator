@@ -11,28 +11,50 @@ original input string.
 
 
 ## How it works
-This Python script works by prompting you to input a string containing letters and numbers, as well as the desired length of combinations. It then utilizes the `itertools` module 
-to generate all possible combinations of the specified length from the input string, allowing for repetition of characters. After generating the combinations, the script saves 
-the unique combinations to a text file. Each file is named after the input string and stored in a `combinations` folder within the working directory. 
+Python script featuring a GUI for generating combinations of characters and numbers. Users input a string and combination length, then view and copy generated combinations.
+The script simplifies exploring different combinations through an intuitive interface.
 
 
-## How to run the script
+## Usage
 
-1. Clone Repository.
+Download the latest release from the GitHub repository's "Releases" section,
+or [build the application](#building) from source code.
+
+
+## Building
+
+1. Clone the repository.
+
 ```bash
 git clone https://github.com/PetarMc1/combination-generator
 ```
 
-2. Run Script: Open a terminal and run the script.
+
+
+2. Install PyInstaller.
+
+If you haven't installed PyInstaller yet, you can install it via pip:
+
 ```bash
-python main.py
+pip install pyinstaller
 ```
 
-3. Follow Prompt and View Results
-You will find the generated combination files in the `ccombinations` folder.
 
-## Contributing
-Check the [Contributing Guidelines](/CONTRIBUTING.md)
 
-## Licence
-The Combination Generator is licensed under the [MIT](/LICENCE) Licence
+
+3. Run PyInstaller command.
+
+Use PyInstaller to convert the script into a `.exe` file with the `--windowed` flag to hide the console window.
+
+```bash
+pyinstaller --onefile --windowed combination_generator.py
+```
+This command will create an executable file (combination_generator.exe) without a console window when opened.
+
+
+
+
+4. Find the `.exe`.
+
+Once PyInstaller has finished, navigate to the `dist` directory inside the repo directory. You will find the executable (`.exe`) file (combination_generator.exe) in this directory.
+
