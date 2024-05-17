@@ -47,7 +47,7 @@ pip install pyinstaller
 Use PyInstaller to convert the script into a `.exe` file with the `--windowed` flag to hide the console window.
 
 ```bash
-pyinstaller --onefile --windowed combination_generator.py
+pyinstaller --onefile --windowed --icon=Assets/logo.ico --add-data "Assets/logo.ico;Assets" combination_generator.py
 ```
 This command will create an executable file (combination_generator.exe) without a console window when opened.
 
