@@ -1,28 +1,74 @@
 import itertools
-import os
+import tkinter as tk
+from tkinter import messagebox
+from tkinter.scrolledtext import ScrolledText
+import pyperclip
 
 def generate_combinations(input_string, combination_length):
     combinations = itertools.product(input_string, repeat=combination_length)
     unique_combinations = set(combinations)
-    
     return unique_combinations
 
-def save_combinations_to_file(combinations, input_string):
-    directory = 'combinations'
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+def display_combinations(combinations, output_area):
+    combinations_str = "\n".join("".join(combination) for combination in combinations)
+    output_area.config(state=tk.NORMAL)
+    output_area.delete(1.0, tk.END)
+    output_area.insert(tk.END, combinations_str)
+    output_area.config(state=tk.DISABLED)
+    return combinations_str
 
-    filename = os.path.join(directory, f'{input_string}.txt')
-    with open(filename, 'w') as file:
-        file.write(f"All combinations are generated from the characters and numbers: {input_string}\n\n")
-        for combination in combinations:
-            file.write(''.join(combination) + '\n')
+def main():
+    root = tk.Tk()
+    root.title("Combination Generator")
 
-    print(f'Combinations saved to {filename}')
+    # Grid configuration
+    root.grid_columnconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+    root.grid_rowconfigure(3, weight=1)
+
+    # Input String
+    input_label = tk.Label(root, text="String:")
+    input_label.grid(row=0, column=0, padx=10, pady=5, sticky=tk.E)
+
+    input_entry = tk.Entry(root, width=50)
+    input_entry.grid(row=0, column=1, padx=10, pady=5, sticky=tk.W)
+
+    # Combination Length
+    length_label = tk.Label(root, text="Count:")
+    length_label.grid(row=1, column=0, padx=10, pady=5, sticky=tk.E)
+
+    length_spinbox = tk.Spinbox(root, from_=1, to=10, width=5)
+    length_spinbox.grid(row=1, column=1, padx=10, pady=5, sticky=tk.W)
+
+    # Output Area
+    output_label = tk.Label(root, text="Output:")
+    output_label.grid(row=2, column=0, padx=10, pady=5, sticky=tk.NE)
+
+    output_area = ScrolledText(root, wrap=tk.WORD, width=50, height=20, state=tk.DISABLED)
+    output_area.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+
+    # Buttons
+    def on_generate():
+        input_string = input_entry.get()
+        try:
+            combination_length = int(length_spinbox.get())
+            combinations = generate_combinations(input_string, combination_length)
+            combinations_str = display_combinations(combinations, output_area)
+            copy_button.config(command=lambda: copy_to_clipboard(combinations_str))
+        except ValueError:
+            messagebox.showerror("Invalid input", "Please enter a valid number for combination length.")
+
+    def copy_to_clipboard(combinations_str):
+        pyperclip.copy(combinations_str)
+        messagebox.showinfo("Copied", "Combinations copied to clipboard!")
+
+    generate_button = tk.Button(root, text="Generate", command=on_generate)
+    generate_button.grid(row=4, column=1, padx=10, pady=10, sticky=tk.W)
+
+    copy_button = tk.Button(root, text="Copy to Clipboard")
+    copy_button.grid(row=2, column=1, padx=10, pady=5, sticky=tk.W)
+
+    root.mainloop()
 
 if __name__ == "__main__":
-    input_string = input("Enter the string of letters and numbers: ")
-    combination_length = int(input("Enter the length of combinations: "))
-
-    combinations = generate_combinations(input_string, combination_length)
-    save_combinations_to_file(combinations, input_string)
+    main()
