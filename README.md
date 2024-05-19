@@ -20,7 +20,7 @@ the unique combinations to a text file. Each file is named after the input strin
 
 1. Clone Repository.
 ```bash
-git clone https://github.com/PetarMc1/combination-generator
+git clone https://github.com/PetarMc1/combination-generator -b v1.0.0
 ```
 
 2. Run Script: Open a terminal and run the script.
@@ -29,7 +29,7 @@ python main.py
 ```
 
 3. Follow Prompt and View Results
-You will find the generated combination files in the `ccombinations` folder.
+You will find the generated combination files in the `combinations` folder.
 
 ## Contributing
 Check the [Contributing Guidelines](/CONTRIBUTING.md)
